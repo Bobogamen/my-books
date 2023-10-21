@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { addBook, getAllAuthors } from "../api/service";
-import { GET } from '../api/service2';
 
 function AddBook() {
     const [authors, setAuthors] = useState([]);

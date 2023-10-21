@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { getAllBooks } from '../api/service';
-import { GET } from '../api/service2';
 
 function ListAllBooks() {
     const [books, setBooks] = useState([]);
@@ -44,7 +43,6 @@ function ListAllBooks() {
                     :
                     <div>
                         <p className="text-bg-danger d-block width-fit-content px-1 rounded-1 m-auto">Списъкът е празен</p>
-                        <p className="text-bg-danger d-block width-fit-content px-1 rounded-1 m-auto" onClick={get}>klick</p>
                     </div>
                 }
             </div>
