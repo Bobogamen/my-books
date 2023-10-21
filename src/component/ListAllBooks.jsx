@@ -7,7 +7,8 @@ function ListAllBooks() {
     useEffect(() => {
         getAllBooks().then(response => {
             setBooks(response.data)
-        })
+        }).catch(res => res.json).
+        catch(res => res.json)
     }, [books]);
 
     return (
