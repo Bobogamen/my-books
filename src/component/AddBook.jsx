@@ -1,6 +1,7 @@
-import React, {useEffect, useState} from 'react';
-import {useNavigate} from 'react-router-dom';
-import {addBook, getAllAuthors} from "../api/service";
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { addBook, getAllAuthors } from "../api/service";
+import { GET } from '../api/service2';
 
 function AddBook() {
     const [authors, setAuthors] = useState([]);
@@ -8,7 +9,7 @@ function AddBook() {
     const [authorId, setAuthorId] = useState(1);
     const navigate = useNavigate();
 
-    useEffect( () => {
+    useEffect(() => {
         getAllAuthors().then((response) => {
             setAuthors(response.data);
         });
@@ -37,7 +38,8 @@ function AddBook() {
         <div className="container my-2">
             <div className="card col-md-6 offset-md-3 offset-md-3">
                 <div className="card-body">
-                    <form>
+                    {authors.length > 0 ? 
+                        <form>
                         <h4>Добави книга</h4>
                         <div className="form-group my-1">
                             <label> Заглавие: </label>
@@ -66,6 +68,11 @@ function AddBook() {
                             Отказ
                         </button>
                     </form>
+                     :
+                        <div>
+                            <p className="text-bg-danger d-block width-fit-content px-1 rounded-1 m-auto">Добавете поне един автор</p>
+                        </div>
+                    }
                 </div>
             </div>
         </div>

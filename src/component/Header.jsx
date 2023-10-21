@@ -13,7 +13,7 @@ class Header extends Component {
         return (
             <div>
                 <header className="navbar navbar-expand-md navbar-dark bg-dark">
-                    <div className="d-flex mx-2">
+                    <div className="d-flex mx-2 m-auto">
                         <a href="/books">
                             <button className="btn btn-secondary btn-sm mx-1">Книги</button>
                         </a>

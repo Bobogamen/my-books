@@ -1,5 +1,6 @@
-import React, {useEffect, useState} from 'react';
-import {getAllBooks} from '../api/service';
+import React, { useEffect, useState } from 'react';
+import { getAllBooks } from '../api/service';
+import { GET } from '../api/service2';
 
 function ListAllBooks() {
     const [books, setBooks] = useState([]);
@@ -19,26 +20,33 @@ function ListAllBooks() {
                 </a>
             </div>
             <div className="container">
-                <table className="table table-sm table-bordered text-center align-middle">
-                    <thead className="h6">
-                    <tr>
-                        <th>Заглавие</th>
-                        <th>Автор</th>
-                    </tr>
-                    </thead>
-                    <tbody className="h6">
-                    {books.map(b => (
-                        <tr key={b.id}>
-                            <td>
-                                <a href={`/book/${b.id}`}>{b.title}</a>
-                            </td>
-                            <td>
-                                <a href={`/author/${b.author.id}`}>{b.author.name}</a>
-                            </td>
-                        </tr>
-                    ))}
-                    </tbody>
-                </table>
+                {books.length > 0 ?
+                    <table className="table table-sm table-bordered text-center align-middle">
+                        <thead className="h6">
+                            <tr>
+                                <th>Заглавие</th>
+                                <th>Автор</th>
+                            </tr>
+                        </thead>
+                        <tbody className="h6">
+                            {books.map(b => (
+                                <tr key={b.id}>
+                                    <td>
+                                        <a href={`/book/${b.id}`}>{b.title}</a>
+                                    </td>
+                                    <td>
+                                        <a href={`/author/${b.author.id}`}>{b.author.name}</a>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                    :
+                    <div>
+                        <p className="text-bg-danger d-block width-fit-content px-1 rounded-1 m-auto">Списъкът е празен</p>
+                        <p className="text-bg-danger d-block width-fit-content px-1 rounded-1 m-auto" onClick={get}>klick</p>
+                    </div>
+                }
             </div>
         </div>
     );
