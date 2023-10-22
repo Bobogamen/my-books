@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import SearchBar from "./Search";
 
 class Header extends Component {
@@ -20,7 +20,7 @@ class Header extends Component {
                         <a href="/authors">
                             <button className="btn btn-primary btn-sm">Автори</button>
                         </a>
-                        <SearchBar/>
+                        <SearchBar />
                     </div>
                 </header>
             </div>

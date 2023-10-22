@@ -7,14 +7,15 @@ function ListAllBooks() {
     useEffect(() => {
         getAllBooks().then(response => {
             setBooks(response.data)
-        }).catch(res => res.json).
-        catch(res => res.json)
+        })
+            .then(res => res.json)
+            .catch(res => res.json)
     }, [books]);
 
     return (
         <div>
             <div className="d-flex justify-content-center my-2">
-                <h2 className="text-center fw-bold mx-1 m-auto">Списък книги</h2> :
+                <h2 className="text-center fw-bold mx-2 m-auto">Книги {books.length}бр.</h2>
                 <a href="/add-book">
                     <button className="btn btn-success fw-bold">Добави</button>
                 </a>

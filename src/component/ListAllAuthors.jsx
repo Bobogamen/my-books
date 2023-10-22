@@ -7,13 +7,14 @@ function ListAllAuthors() {
     useEffect(() => {
         getAllAuthors().then(response => {
             setAuthors(response.data)
-        })
+        }).then(res => res.json)
+        .catch(res => res.json)
     }, [authors])
 
     return (
         <div>
             <div className="d-flex justify-content-center my-2">
-                <h2 className="text-center fw-bold mx-1 m-auto">Автори</h2>
+                <h2 className="text-center fw-bold mx-2 m-auto">Автори {authors.length}бр.</h2>
                 <a href="/add-author">
                     <button className="btn btn-warning fw-bold">Добави</button>
                 </a>

@@ -24,6 +24,7 @@ function App() {
                     <Route path="/author/:id" element={<Author/>}/>
                     <Route path="/add-author" element={<AddAuthor/>}/>
                     <Route path="/search/:word" element={<Result/>} />
+                    <Route path="/search" element={<Result/>} />
                 </Routes>
             </Router>
         </div>
