@@ -1,10 +1,10 @@
-import React, {useEffect, useState} from 'react';
-import {useParams} from "react-router";
-import {deleteBookById, editBookById, getAllAuthors, getBookById} from "../api/service";
-import {useNavigate} from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import { useParams } from "react-router";
+import { deleteBookById, editBookById, getAllAuthors, getBookById } from "../api/service";
+import { useNavigate } from "react-router-dom";
 
 function Book() {
-    const {id} = useParams()
+    const { id } = useParams()
     const [book, setBook] = useState([])
     const [authors, setAuthors] = useState([])
     const navigate = useNavigate();
@@ -47,7 +47,7 @@ function Book() {
     };
 
     const editBook = async () => {
-        if(await editBookById(book)) {
+        if (await editBookById(book)) {
             navigate("/books")
             window.location.reload()
         }
@@ -62,16 +62,16 @@ function Book() {
                     <form className="card-body">
                         <div>
                             <input className="d-inline-block px-2"
-                                   type="text"
-                                   value={book.title}
-                                   onChange={changeTitleHandler}
+                                type="text"
+                                value={book.title}
+                                onChange={changeTitleHandler}
                             />
                         </div>
                         <div className="d-grid width-fit-content m-auto">
                             <h3 className="fw-bold">Автор: </h3>
-                            <select className="mx-1" onChange={changeAuthorIdHandler}>
+                            <select className="mx-1" onChange={changeAuthorIdHandler} value={book.author.id}>
                                 {authors.map((a) => (
-                                    <option key={a.id} id={a.id} selected={book.author.id === a.id}>
+                                    <option key={a.id} value={a.id}>
                                         {a.name}
                                     </option>
                                 ))}
