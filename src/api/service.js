@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const host = 'https://mybooks-server.railway.internal'
+const host = 'https://mybooks-server.up.railway.app'
 
 export function getAllBooks() {
     return axios.get(`${host}/books`)
