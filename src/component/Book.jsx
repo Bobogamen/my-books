@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from "react-router";
-import { deleteBookById, editBookById, getAllAuthors, getBookById } from "../api/service";
 import { useNavigate } from "react-router-dom";
+import Select from "react-select";
+import { deleteBookById, editBookById, getAllAuthors, getBookById } from "../api/service";
 
 function Book() {
     const { id } = useParams()
-    const [book, setBook] = useState([])
+    const [book, setBook] = useState({ title: '' })
     const [authors, setAuthors] = useState([])
     const navigate = useNavigate();
 
@@ -19,6 +20,7 @@ function Book() {
         })
 
     }, [id]);
+
 
     const deleteBook = () => {
         if (window.confirm("Сигурни ли сте?")) {
@@ -53,31 +55,28 @@ function Book() {
         }
     }
 
-
     return (
         <div>
             <div className="container">
                 <div className="card m-auto mt-2 mb-5 p-2">
-                    <h2 className="fw-bold">Заглавие: </h2>
                     <form className="card-body">
-                        <div>
-                            <input className="d-inline-block px-2"
+                        <h2 className="fw-bold p-0 m-0">Заглавие: </h2>
+                        <div className="d-grid">
+                            <input className="h4 d-inline-block text-center px-2"
                                 type="text"
-                                value={book.title}
-                                onChange={changeTitleHandler}
-                            />
+                                value={book.title} onChange={changeTitleHandler} />
                         </div>
-                        <div className="d-grid width-fit-content m-auto">
-                            <h3 className="fw-bold">Автор: </h3>
-                            <select className="mx-1" onChange={changeAuthorIdHandler} value={book.author.id}>
+                        <div className="d-grid width-fit-content m-auto mt-2">
+                            <h3 className="fw-bold p-0 m-0">Автор: </h3>
+                            <select name='Автор' className="mx-1" onChange={changeAuthorIdHandler}>
                                 {authors.map((a) => (
-                                    <option key={a.id} value={a.id}>
+                                    <option key={a.id} value={a.id} selected={book.author.id}>
                                         {a.name}
                                     </option>
                                 ))}
                             </select>
                         </div>
-                        <span id={id} className="btn btn-success my-3" onClick={editBook}>Запази</span>
+                        <span id={id} className="btn btn-success my-4" onClick={editBook}>Запази</span>
                     </form>
                 </div>
                 <span id={id} className="btn btn-danger mt-5" onClick={deleteBook}>Изтрий</span>
