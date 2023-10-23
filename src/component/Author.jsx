@@ -1,22 +1,35 @@
-import React, {useEffect, useState} from 'react';
-import {useParams} from "react-router";
-import {deleteAuthorById, deleteBookById, editAuthorById, getAuthorById} from "../api/service";
-import {useNavigate} from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import { useParams } from "react-router";
+import { deleteAuthorById, deleteBookById, editAuthorById, getAuthorById } from "../api/service";
+import { useNavigate } from "react-router-dom";
 
 function Author() {
-    const {id} = useParams();
+    const { id } = useParams();
     const [author, setAuthor] = useState({
         id: '',
         name: '',
         books: []
     });
+    const [isNameValid, setIsNameValid] = useState(true);
+    const [showButton, setShowButton] = useState(true);
     const navigate = useNavigate()
 
     useEffect(() => {
         getAuthorById(id).then(response => {
             setAuthor(response.data)
         });
-    }, []);
+    }, [id]);
+
+    useEffect(() => {
+        setShowButton(author.name.length >= 3)
+
+        if (author.name.length > 0) {
+            setIsNameValid(false)
+            if (author.name.length >= 3) {
+                setIsNameValid(true)
+            }
+        }
+    }, [author.name.length])
 
     const changeNameHandler = (event) => {
         setAuthor({
@@ -26,7 +39,7 @@ function Author() {
     }
 
     const changeAuthorName = () => {
-        if(editAuthorById(author.id, author.name)) {
+        if (editAuthorById(author.id, author.name)) {
             navigate("/authors")
         }
     }
@@ -54,37 +67,43 @@ function Author() {
             <div className="container">
                 <div className="card my-2 p-2">
                     <form className="mb-3">
+                        <small className={`bg-danger px-1 rounded text-white ${isNameValid ? 'hidden' : ''}`}>
+                            Името трябва да е поне 3 символа
+                        </small>
                         <h2>Автор:</h2>
                         <div>
                             <input className="h3 d-inline-block text-center px-2"
-                                   type="text"
-                                   value={author.name} onChange={changeNameHandler}/>
+                                type="text"
+                                value={author.name} onChange={changeNameHandler} />
                         </div>
-                        <span id={author.id} className="btn btn-success" onClick={changeAuthorName}>Запази</span>
-
+                        {showButton ?
+                            <span id={author.id} className="btn btn-success my-4" onClick={changeAuthorName}>Запази</span>
+                            :
+                            <span id={author.id} className="btn btn-success my-4 hidden" onClick={changeAuthorName}>Запази</span>
+                        }
                     </form>
                 </div>
                 <table className="table table-sm table-bordered table-secondary">
                     <thead className="h6">
-                    <tr>
-                        <th colSpan={2}>
-                            <h4>Книги</h4>
-                        </th>
-                    </tr>
+                        <tr>
+                            <th colSpan={2}>
+                                <h4>Книги</h4>
+                            </th>
+                        </tr>
                     </thead>
                     <tbody className="h6 border-1">
-                    {
-                        author.books.map(b => (
-                            <tr key={b.id}>
-                                <td><a href={`/book/${b.id}`}>{b.title}</a></td>
-                                <td>
-                                    <button id={b.id} className="btn btn-danger px-2 py-0" onClick={deleteBook}>
-                                        X
-                                    </button>
-                                </td>
-                            </tr>
-                        ))
-                    }
+                        {
+                            author.books.map(b => (
+                                <tr key={b.id}>
+                                    <td><a href={`/book/${b.id}`}>{b.title}</a></td>
+                                    <td>
+                                        <button id={b.id} className="btn btn-danger px-2 py-0" onClick={deleteBook}>
+                                            X
+                                        </button>
+                                    </td>
+                                </tr>
+                            ))
+                        }
                     </tbody>
                 </table>
                 <div>

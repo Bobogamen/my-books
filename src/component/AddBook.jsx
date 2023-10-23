@@ -68,7 +68,7 @@ function AddBook() {
                         <form>
                             <h4 className="p-0 m-0">Добави книга</h4>
                             <small className={`bg-danger px-1 rounded text-white ${isNameValid ? 'hidden' : ''}`}>
-                                Името трябва да е поне 3 символа
+                                Заглавието трябва да е поне 3 символа
                             </small>
                             <div className="form-group">
                                 <label> Заглавие: </label>

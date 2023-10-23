@@ -1,6 +1,7 @@
 import axios from "axios";
 
 const host = 'https://mybooks-server.up.railway.app'
+// const host = 'http://localhost:8080'
 
 export function getAllBooks() {
     return axios.get(`${host}/books`)

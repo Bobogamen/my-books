@@ -1,33 +1,61 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from "react-router";
 import { useNavigate } from "react-router-dom";
-import Select from "react-select";
 import { deleteBookById, editBookById, getAllAuthors, getBookById } from "../api/service";
+import AuthorSelect from './AuthorSelect';
 
 function Book() {
-    const { id } = useParams()
-    const [book, setBook] = useState({ title: '' })
-    const [authors, setAuthors] = useState([])
+    const { id } = useParams();
+    const [book, setBook] = useState({
+        id: '',
+        title: '',
+        author: {
+            id: '',
+            name: ''
+        }
+    });
+    const [authors, setAuthors] = useState([]);
+    const [bookAuthor, setBookAuthor] = useState({});
+    const [isNameValid, setIsNameValid] = useState(true);
+    const [showButton, setShowButton] = useState(true);
     const navigate = useNavigate();
 
     useEffect(() => {
-        getBookById(id).then(response => {
-            setBook(response.data)
+        getBookById(id).then((response) => {
+            setBook(response.data);
         });
-
-        getAllAuthors().then(response => {
-            setAuthors(response.data)
-        })
-
     }, [id]);
 
+    useEffect(() => {
+        getAllAuthors().then((response) => {
+            setAuthors(response.data);
+        });
+    }, []);
 
-    const deleteBook = () => {
-        if (window.confirm("Сигурни ли сте?")) {
-            if (deleteBookById(id)) {
-                alert("Книгата е изтрита!")
-                navigate('/books')
-                window.location.reload()
+    useEffect(() => {
+        setBookAuthor({
+            value: book.author.id,
+            label: book.author.name
+        })
+    }, [book.author])
+
+    useEffect(() => {
+        setShowButton(book.title.length >= 3)
+
+        if (book.title.length > 0) {
+            setIsNameValid(false)
+            if (book.title.length >= 3) {
+                setIsNameValid(true)
+            }
+        }
+    }, [book.title.length])
+
+    const deleteBook = async () => {
+        if (window.confirm('Сигурни ли сте?')) {
+            const deleted = await deleteBookById(id);
+            if (deleted) {
+                alert('Книгата е изтрита!');
+                navigate('/books');
             }
         }
     }
@@ -35,23 +63,26 @@ function Book() {
     const changeTitleHandler = (event) => {
         setBook({
             ...book,
-            title: event.target.value
+            title: event.target.value,
         });
     };
 
-    const changeAuthorIdHandler = (event) => {
-        setBook({
-            ...book,
-            author: {
-                id: event.target.selectedOptions[0].id
-            }
-        })
+    const changeAuthorHandler = (selectedOption) => {
+        setBookAuthor(selectedOption)
     };
 
     const editBook = async () => {
-        if (await editBookById(book)) {
-            navigate("/books")
-            window.location.reload()
+        const bookForSend = {
+            id: book.id,
+            title: book.title,
+            author: {
+                id: bookAuthor.value,
+                name: bookAuthor.label
+            }
+        }
+
+        if (await editBookById(bookForSend)) {
+            navigate('/books');
         }
     }
 
@@ -60,30 +91,44 @@ function Book() {
             <div className="container">
                 <div className="card m-auto mt-2 mb-5 p-2">
                     <form className="card-body">
+                        <small className={`bg-danger px-1 rounded text-white ${isNameValid ? 'hidden' : ''}`}>
+                            Заглавието трябва да е поне 3 символа
+                        </small>
                         <h2 className="fw-bold p-0 m-0">Заглавие: </h2>
                         <div className="d-grid">
-                            <input className="h4 d-inline-block text-center px-2"
+                            <input
+                                className="h4 d-inline-block text-center px-2"
                                 type="text"
-                                value={book.title} onChange={changeTitleHandler} />
+                                value={book.title}
+                                onChange={changeTitleHandler}
+                            />
                         </div>
                         <div className="d-grid width-fit-content m-auto mt-2">
                             <h3 className="fw-bold p-0 m-0">Автор: </h3>
-                            <select name='Автор' className="mx-1" onChange={changeAuthorIdHandler}>
-                                {authors.map((a) => (
-                                    <option key={a.id} value={a.id} selected={book.author.id}>
-                                        {a.name}
-                                    </option>
-                                ))}
-                            </select>
+                            <AuthorSelect
+                                authors={authors}
+                                selectedAuthor={bookAuthor}
+                                onAuthorChange={changeAuthorHandler}
+                            />
                         </div>
-                        <span id={id} className="btn btn-success my-4" onClick={editBook}>Запази</span>
+                        {showButton ?
+                            <span id={id} className="btn btn-success my-5" onClick={editBook}>
+                                Запази
+                            </span>
+                            : 
+                            <span id={id} className="btn btn-success my-5 hidden" onClick={editBook}>
+                                Запази
+                            </span>
+                        }
                     </form>
                 </div>
-                <span id={id} className="btn btn-danger mt-5" onClick={deleteBook}>Изтрий</span>
+                <span id={id} className="btn btn-danger mt-5" onClick={deleteBook}>
+                    Изтрий
+                </span>
             </div>
         </div>
-    )
-        ;
+    );
 }
+
 
 export default Book;
