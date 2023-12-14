@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import SearchBar from "./Search";
 import eng from "../assets/images/eng.png"
 import bg from "../assets/images/bg.png"
