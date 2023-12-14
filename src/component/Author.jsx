@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from "react-router";
 import { deleteAuthorById, deleteBookById, editAuthorById, getAuthorById } from "../api/service";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from 'react-i18next';
 
 function Author() {
     const { id } = useParams();
@@ -45,7 +46,7 @@ function Author() {
     }
 
     const deleteAuthor = () => {
-        if (window.confirm("Сигурен ли си? Изтриването на автора ще изтрие и неговите книги!")) {
+        if (window.confirm(t('Are you sure? Deleting the author will also delete all his books!'))) {
             if (deleteAuthorById(id)) {
                 navigate("/books")
             }
@@ -53,14 +54,15 @@ function Author() {
     }
 
     const deleteBook = (event) => {
-        if (window.confirm("Сигурни ли сте?")) {
+        if (window.confirm(t('Are you sure?'))) {
             if (deleteBookById(event.target.id)) {
-                alert("Книгата е изтрита!")
+                alert("The book has been deleted!")
                 window.location.reload()
             }
         }
     }
 
+    const { t } = useTranslation();
 
     return (
         <div>
@@ -68,18 +70,18 @@ function Author() {
                 <div className="card my-2 p-2">
                     <form className="mb-3">
                         <small className={`bg-danger px-1 rounded text-white ${isNameValid ? 'hidden' : ''}`}>
-                            Името трябва да е поне 3 символа
+                            {t('Name')} {t('must be at least 3 symbols')}
                         </small>
-                        <h2>Автор:</h2>
+                        <h2>{t('Author')}:</h2>
                         <div>
                             <input className="h3 d-inline-block text-center px-2"
                                 type="text"
                                 value={author.name} onChange={changeNameHandler} />
                         </div>
                         {showButton ?
-                            <span id={author.id} className="btn btn-success my-4" onClick={changeAuthorName}>Запази</span>
+                            <span id={author.id} className="btn btn-success my-4" onClick={changeAuthorName}>{t('Save')}</span>
                             :
-                            <span id={author.id} className="btn btn-success my-4 hidden" onClick={changeAuthorName}>Запази</span>
+                            <span id={author.id} className="btn btn-success my-4 hidden" onClick={changeAuthorName}>{t('Save')}</span>
                         }
                     </form>
                 </div>
@@ -87,7 +89,7 @@ function Author() {
                     <thead className="h6">
                         <tr>
                             <th colSpan={2}>
-                                <h4>Книги</h4>
+                                <h4>{t('Books')}</h4>
                             </th>
                         </tr>
                     </thead>
@@ -107,7 +109,7 @@ function Author() {
                     </tbody>
                 </table>
                 <div>
-                    <span id={id} className="btn btn-danger mt-5" onClick={deleteAuthor}>Изтрий всичко</span>
+                    <span id={id} className="btn btn-danger mt-5" onClick={deleteAuthor}>{t('Delete all')}</span>
                 </div>
             </div>
         </div>

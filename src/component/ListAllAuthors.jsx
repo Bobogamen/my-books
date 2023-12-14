@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {getAllAuthors} from "../api/service";
+import { useTranslation } from 'react-i18next';
 
 function ListAllAuthors() {
     const [authors, setAuthors] = useState([])
@@ -11,20 +12,22 @@ function ListAllAuthors() {
         .catch(res => res.json)
     }, [authors])
 
+    const { t } = useTranslation();
+
     return (
         <div>
             <div className="d-flex justify-content-center my-2">
-                <h2 className="text-center fw-bold mx-2 m-auto">Автори {authors.length}бр.</h2>
+                <h2 className="text-center fw-bold mx-2 m-auto">{t('Authors')} {authors.length}{t('pcs')}.</h2>
                 <a href="/add-author">
-                    <button className="btn btn-warning fw-bold">Добави</button>
+                    <button className="btn btn-warning fw-bold">{t('Add')}</button>
                 </a>
             </div>
             <div className="d-flex col-11 m-auto">
                 <table className="table table-sm table-bordered text-center align-middle">
                     <thead className="h6">
                     <tr>
-                        <th>Заглавие</th>
-                        <th>Книги</th>
+                        <th>{t('Tittle')}</th>
+                        <th>{t('Books')}</th>
                     </tr>
                     </thead>
                     <tbody className="h6">

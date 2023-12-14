@@ -3,6 +3,7 @@ import { useParams } from "react-router";
 import { useNavigate } from "react-router-dom";
 import { deleteBookById, editBookById, getAllAuthors, getBookById } from "../api/service";
 import AuthorSelect from './AuthorSelect';
+import { useTranslation } from 'react-i18next';
 
 function Book() {
     const { id } = useParams();
@@ -86,15 +87,17 @@ function Book() {
         }
     }
 
+    const { t } = useTranslation();
+
     return (
         <div>
             <div className="container">
                 <div className="card m-auto mt-2 mb-5 p-2">
                     <form className="card-body">
                         <small className={`bg-danger px-1 rounded text-white ${isNameValid ? 'hidden' : ''}`}>
-                            Заглавието трябва да е поне 3 символа
+                            {t('Tittle')} {t('must be at least 3 symbols')}
                         </small>
-                        <h2 className="fw-bold p-0 m-0">Заглавие: </h2>
+                        <h2 className="fw-bold p-0 m-0">{t('Title')}: </h2>
                         <div className="d-grid">
                             <input
                                 className="h4 d-inline-block text-center px-2"
@@ -104,7 +107,7 @@ function Book() {
                             />
                         </div>
                         <div className="d-grid width-fit-content m-auto mt-2">
-                            <h3 className="fw-bold p-0 m-0">Автор: </h3>
+                            <h3 className="fw-bold p-0 m-0">{t('Author')}: </h3>
                             <AuthorSelect
                                 authors={authors}
                                 selectedAuthor={bookAuthor}
@@ -113,17 +116,17 @@ function Book() {
                         </div>
                         {showButton ?
                             <span id={id} className="btn btn-success my-5" onClick={editBook}>
-                                Запази
+                                {t('Save')}
                             </span>
-                            : 
+                            :
                             <span id={id} className="btn btn-success my-5 hidden" onClick={editBook}>
-                                Запази
+                                {t('Save')}
                             </span>
                         }
                     </form>
                 </div>
                 <span id={id} className="btn btn-danger mt-5" onClick={deleteBook}>
-                    Изтрий
+                    {t('Delete')}
                 </span>
             </div>
         </div>

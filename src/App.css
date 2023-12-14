@@ -54,3 +54,8 @@
 .width-fit-content {
   width: fit-content;
 }
+
+.i18-img {
+  height: 1.6rem;
+  width: 2.1rem;
+}

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from "react-router";
 import { searchBooks } from "../api/service";
+import { useTranslation } from 'react-i18next';
 
 function Result() {
     const { word } = useParams()
@@ -16,19 +17,21 @@ function Result() {
         })
     }, [word]);
 
+    const { t } = useTranslation();
+
     return (
         <div>
             {books.length > 0 ?
                 <div>
                     <div className="d-flex justify-content-center my-2">
-                        <h2 className="text-center fw-bold mx-1 m-auto">Резултати за '{word}'</h2>
+                        <h2 className="text-center fw-bold mx-1 m-auto">{t('Results for')} '{word}'</h2>
                     </div>
                     < div className="container">
                         <table className="table table-sm table-bordered text-center align-middle">
                             <thead className="h6">
                                 <tr>
-                                    <th>Заглавие</th>
-                                    <th>Автор</th>
+                                    <th>{t('Title')}</th>
+                                    <th>{t('Author')}</th>
                                 </tr>
                             </thead>
                             <tbody className="h6">
@@ -48,7 +51,7 @@ function Result() {
                 </div>
                 :
                 <div className="d-flex justify-content-center my-2">
-                    <h2 className="text-center fw-bold mx-1 m-auto">Няма намерени резултати</h2>
+                    <h2 className="text-center fw-bold mx-1 m-auto">{t('No results found')}</h2>
                 </div>
             }
         </div >

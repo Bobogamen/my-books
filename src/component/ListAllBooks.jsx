@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { getAllBooks } from '../api/service';
 import { BsSortAlphaDown, BsSortAlphaDownAlt } from "react-icons/bs";
+import { useTranslation } from 'react-i18next';
 
 function ListAllBooks() {
     const [books, setBooks] = useState([]);
@@ -41,12 +42,14 @@ function ListAllBooks() {
         setSortByAuthor(!sortByAuthor);
     };
 
+    const { t } = useTranslation()
+
     return (
         <div>
             <div className="d-flex justify-content-center my-2">
-                <h2 className="text-center fw-bold mx-2 m-auto">Книги {books.length} бр.</h2>
+                <h2 className="text-center fw-bold mx-2 m-auto">{t('Books')} {books.length} бр.</h2>
                 <a href="/add-book">
-                    <button className="btn btn-success fw-bold">Добави</button>
+                    <button className="btn btn-success fw-bold">{t('Add')}</button>
                 </a>
             </div>
             <div className="container">
@@ -56,7 +59,7 @@ function ListAllBooks() {
                             <tr>
                                 <th>
                                     <div className="h4 p-0 m-0">
-                                        <span className="mx-1 fw-bold">Заглавие</span>
+                                        <span className="mx-1 fw-bold">{t('Title')}</span>
                                         { sortByTitle ?
                                             <BsSortAlphaDown className="border border-black rounded h3" onClick={handleSortByTitle}/>
                                             :
@@ -66,7 +69,7 @@ function ListAllBooks() {
                                 </th>
                                 <th>
                                     <div className="h4 p-0 m-0">
-                                        <span className="mx-1 fw-bold">Автор</span>
+                                        <span className="mx-1 fw-bold">{t('Author')}</span>
                                         { sortByAuthor ?
                                             <BsSortAlphaDown className="border border-black rounded h3" onClick={handleSortByAuthor}/>
                                             :
@@ -91,7 +94,7 @@ function ListAllBooks() {
                     </table>
                     :
                     <div>
-                        <p className="text-bg-danger d-block width-fit-content px-1 rounded-1 m-auto">Списъкът е празен</p>
+                        <p className="text-bg-danger d-block width-fit-content px-1 rounded-1 m-auto">{t('The list is empty')}</p>
                     </div>
                 }
             </div>

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { addAuthor } from '../api/service';
+import { useTranslation } from 'react-i18next';
 
 function AddAuthor() {
     const [name, setName] = useState('');
@@ -34,20 +35,22 @@ function AddAuthor() {
         setName(event.target.value);
     }
 
+    const { t } = useTranslation()
+
     return (
         <div className="container my-2">
             <div className="card col-md-6 offset-md-3 offset-md-3">
                 <div className="card-body">
                     <form>
-                        <h4 className="p-0 m-0">Добави автор</h4>
+                        <h4 className="p-0 m-0">{t('Add')} {t('Author')}</h4>
                         <small className={`bg-danger px-1 rounded text-white ${isNameValid ? 'hidden' : ''}`}>
-                            Името трябва да е поне 3 символа
+                            {t('Name')} {t('must be at least 3 symbols')}
                         </small>
                         <div className="form-group">
-                            <label>Име: </label>
+                            <label>{t('Name')}: </label>
                             <input
-                                placeholder="Име"
-                                name="name"
+                                placeholder={t('Name')}
+                                name={t('Name')}
                                 value={name}
                                 onChange={changeNameHandler}
                                 className="form-control"
@@ -55,17 +58,12 @@ function AddAuthor() {
                         </div>
                         <div className="mt-4">
                             {showButton ? (
-                                <button className="btn btn-success" onClick={addOrUpdateAuthor}>
-                                    Запази
-                                </button>
+                                <button className="btn btn-success" onClick={addOrUpdateAuthor}>{t('Save')}</button>
                             ) :
                                 null
                             }
-
                             <a href="/authors">
-                                <span className="btn btn-danger" style={{ marginLeft: '0.5rem' }}>
-                                    Назад
-                                </span>
+                                <span className="btn btn-danger" style={{ marginLeft: '0.5rem' }}>{t('Back')}</span>
                             </a>
                         </div>
                     </form>

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { addBook, getAllAuthors } from "../api/service";
+import { useTranslation } from 'react-i18next';
 
 function AddBook() {
     const [authors, setAuthors] = useState([]);
@@ -60,24 +61,26 @@ function AddBook() {
         setAuthorId(event.target.selectedOptions[0].id);
     };
 
+    const {t} = useTranslation();
+
     return (
         <div className="container my-2">
             <div className="card col-md-6 offset-md-3 offset-md-3">
                 <div className="card-body">
                     {authors.length > 0 ?
                         <form>
-                            <h4 className="p-0 m-0">Добави книга</h4>
+                            <h4 className="p-0 m-0">{t('Add')} {t('Book')}</h4>
                             <small className={`bg-danger px-1 rounded text-white ${isNameValid ? 'hidden' : ''}`}>
-                                Заглавието трябва да е поне 3 символа
+                                {t('Title')} {t('must be at least 3 symbols')}
                             </small>
                             <div className="form-group">
-                                <label> Заглавие: </label>
-                                <input placeholder="Заглавие" name="title" value={title} onChange={changeTitleHandler} className="form-control" />
+                                <label>{t('Title')}:</label>
+                                <input placeholder={t('Title')} name="title" value={title} onChange={changeTitleHandler} className="form-control" />
                             </div>
                             <div className="d-grid mb-1">
-                                <label>Автор: </label>
+                                <label>{t('Author')}: </label>
                                 <select className="mx-1" onChange={changeAuthorIdHandler}>
-                                    <option value="">Изберете автор</option>
+                                    <option value="">{t('Choose')} {t('Author')}</option>
                                     {authors.map((a) => (
                                         <option key={a.id} id={a.id}>
                                             {a.name}
@@ -87,16 +90,16 @@ function AddBook() {
                             </div>
                             {showButton ?
                                 <button className="btn btn-success" onClick={addOrUpdateBook}>
-                                    Запази
+                                    {t('Save')}
                                 </button> : null
                             }
                             <button className="btn btn-danger" style={{ marginLeft: '0.5rem' }}>
-                                Отказ
+                            {t('Cancel')}
                             </button>
                         </form>
                         :
                         <div>
-                            <p className="text-bg-danger d-block width-fit-content px-1 rounded-1 m-auto">Добавете поне един автор</p>
+                            <p className="text-bg-danger d-block width-fit-content px-1 rounded-1 m-auto">{t('Add')} {t('at least one author')}</p>
                         </div>
                     }
                 </div>
