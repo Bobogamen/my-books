@@ -52,10 +52,10 @@ function Book() {
     }, [book.title.length])
 
     const deleteBook = async () => {
-        if (window.confirm('Сигурни ли сте?')) {
+        if (window.confirm(t('Are you sure?'))) {
             const deleted = await deleteBookById(id);
             if (deleted) {
-                alert('Книгата е изтрита!');
+                alert(t('The book has been deleted!'));
                 navigate('/books');
             }
         }

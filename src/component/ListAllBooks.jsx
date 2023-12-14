@@ -47,7 +47,7 @@ function ListAllBooks() {
     return (
         <div>
             <div className="d-flex justify-content-center my-2">
-                <h2 className="text-center fw-bold mx-2 m-auto">{t('Books')} {books.length} бр.</h2>
+                <h2 className="text-center fw-bold mx-2 m-auto">{t('Books')} {books.length}{t('pcs')}.</h2>
                 <a href="/add-book">
                     <button className="btn btn-success fw-bold">{t('Add')}</button>
                 </a>
