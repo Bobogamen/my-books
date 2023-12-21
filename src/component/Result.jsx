@@ -2,22 +2,27 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from "react-router";
 import { searchBooks } from "../api/service";
 import { useTranslation } from 'react-i18next';
+import Loading from './Loading';
 
 function Result() {
+    const [loading, setLoading] = useState(true)
     const { word } = useParams()
     const [books, setBooks] = useState([]);
 
     useEffect(() => {
-        if (word.length === 0 || word === undefined) {
-            console.log(word)
-        }
-
         searchBooks(word).then(response => {
             setBooks(response.data)
         })
+
+        setLoading(false)
+
     }, [word]);
 
     const { t } = useTranslation();
+
+    if (loading) {
+        return <Loading/>
+    }
 
     return (
         <div>

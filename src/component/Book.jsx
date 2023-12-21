@@ -4,8 +4,10 @@ import { useNavigate } from "react-router-dom";
 import { deleteBookById, editBookById, getAllAuthors, getBookById } from "../api/service";
 import AuthorSelect from './AuthorSelect';
 import { useTranslation } from 'react-i18next';
+import Loading from './Loading';
 
 function Book() {
+    const [loading, setLoading] = useState(true)
     const { id } = useParams();
     const [book, setBook] = useState({
         id: '',
@@ -31,6 +33,8 @@ function Book() {
         getAllAuthors().then((response) => {
             setAuthors(response.data);
         });
+
+        setLoading(false)
     }, []);
 
     useEffect(() => {
@@ -88,6 +92,10 @@ function Book() {
     }
 
     const { t } = useTranslation();
+
+    if (loading) {
+        return <Loading/>
+    }
 
     return (
         <div>

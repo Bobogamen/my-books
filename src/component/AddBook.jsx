@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { addBook, getAllAuthors } from "../api/service";
 import { useTranslation } from 'react-i18next';
+import Loading from './Loading';
 
 function AddBook() {
+    const [loading, setLoading] = useState(true);
     const [authors, setAuthors] = useState([]);
     const [title, setTitle] = useState('');
     const [authorId, setAuthorId] = useState(0);
@@ -14,6 +16,7 @@ function AddBook() {
     useEffect(() => {
         getAllAuthors().then((response) => {
             setAuthors(response.data);
+            setLoading(false)
         }).catch(function (err) {
             return null
         })
@@ -62,6 +65,10 @@ function AddBook() {
     };
 
     const {t} = useTranslation();
+
+    if (loading) {
+        return <Loading />
+    }
 
     return (
         <div className="container my-2">

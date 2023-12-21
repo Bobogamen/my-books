@@ -3,8 +3,10 @@ import { useParams } from "react-router";
 import { deleteAuthorById, deleteBookById, editAuthorById, getAuthorById } from "../api/service";
 import { useNavigate } from "react-router-dom";
 import { useTranslation } from 'react-i18next';
+import Loading from './Loading';
 
 function Author() {
+    const [loading, setLoading] = useState(true)
     const { id } = useParams();
     const [author, setAuthor] = useState({
         id: '',
@@ -18,6 +20,7 @@ function Author() {
     useEffect(() => {
         getAuthorById(id).then(response => {
             setAuthor(response.data)
+            setLoading(false)
         });
     }, [id]);
 
@@ -63,6 +66,10 @@ function Author() {
     }
 
     const { t } = useTranslation();
+
+    if (loading) {
+        return <Loading/>
+    }
 
     return (
         <div>

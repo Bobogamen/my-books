@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { getAllBooks } from '../api/service';
 import { BsSortAlphaDown, BsSortAlphaDownAlt } from "react-icons/bs";
 import { useTranslation } from 'react-i18next';
+import Loading from './Loading';
 
 function ListAllBooks() {
+    const [loading, setLoading] = useState(true)
     const [books, setBooks] = useState([]);
     const [sortedBooks, setSortedBooks] = useState([]);
     const [sortByTitle, setSortByTitle] = useState(false);
@@ -16,6 +18,7 @@ function ListAllBooks() {
                 const data = response.data;
                 setBooks(data);
                 setSortedBooks([...data]);
+                setLoading(false)
             } catch (error) {
                 console.error('Error fetching books:', error);
             }
@@ -43,6 +46,10 @@ function ListAllBooks() {
     };
 
     const { t } = useTranslation()
+
+    if (loading) {
+        return <Loading/>
+    }
 
     return (
         <div>

@@ -1,8 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import {getAllAuthors} from "../api/service";
 import { useTranslation } from 'react-i18next';
+import Loading from './Loading';
 
 function ListAllAuthors() {
+    const [loading, setLoading] = useState(true)
     const [authors, setAuthors] = useState([])
 
     useEffect(() => {
@@ -10,9 +12,15 @@ function ListAllAuthors() {
             setAuthors(response.data)
         }).then(res => res.json)
         .catch(res => res.json)
+
+        setLoading(false)
     }, [authors])
 
     const { t } = useTranslation();
+
+    if (loading) {
+        return <Loading/>
+    }
 
     return (
         <div>

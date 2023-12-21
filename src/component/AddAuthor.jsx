@@ -35,7 +35,7 @@ function AddAuthor() {
         setName(event.target.value);
     }
 
-    const { t } = useTranslation()
+    const { t } = useTranslation();
 
     return (
         <div className="container my-2">
