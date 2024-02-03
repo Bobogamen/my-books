@@ -14,7 +14,7 @@ function ListAllAuthors() {
         .catch(res => res.json)
 
         setLoading(false)
-    }, [authors])
+    }, [])
 
     const { t } = useTranslation();
 

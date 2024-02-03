@@ -23,7 +23,7 @@ function AddBook() {
             .catch(function (err) {
                 console.log(err.message)
             });
-    }, [authors]);
+    }, []);
 
     useEffect(() => {
         setShowButton(title.length >= 3)
