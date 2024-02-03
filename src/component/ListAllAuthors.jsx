@@ -34,7 +34,7 @@ function ListAllAuthors() {
                 <table className="table table-sm table-bordered text-center align-middle">
                     <thead className="h6">
                     <tr>
-                        <th>{t('Tittle')}</th>
+                        <th>{t('Title')}</th>
                         <th>{t('Books')}</th>
                     </tr>
                     </thead>
