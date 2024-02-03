@@ -40,17 +40,17 @@ function AddBook() {
         event.preventDefault();
 
         if (authorId === 0) {
-            alert('Моля, изберете автор')
+            alert(t('Please, choose author'))
         } else {
             addBook(title, authorId).then((response) => {
                 if (response.status === 200) {
                     if (response.data === false) {
-                        alert('Изпратени грешни данни')
+                        alert(t('Bad data was sent'))
                     } else {
                         navigate('/books');
                     }
                 } else {
-                    alert("Грешка при изпращането на данни!")
+                    alert(t('Error sending data'))
                 }
             });
         }

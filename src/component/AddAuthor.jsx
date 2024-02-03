@@ -27,7 +27,7 @@ function AddAuthor() {
         if (await addAuthor(name)) {
             navigate('/authors');
         } else {
-            alert("Грешка при изпращането на данни!");
+            alert(t('Error sending data'));
         }
     }
 

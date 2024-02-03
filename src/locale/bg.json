@@ -15,6 +15,7 @@
       "Delete": "Изтрий",
       "Delete all": "Изтрий всичко",
       "pcs": "бр",
+      "My": "Мойте",
       "must be at least 3 symbols": "трябва да е поне 3 символа",
       "at least one author": "поне един автор",
       "Are you sure?": "Сигурен ли сте?",
@@ -22,5 +23,8 @@
       "The list is empty": "Списъкът е празен",
       "Results for": "Резултати за",
       "No results found": "Няма намерени резултати",
+      "Bad data was sent": "Изпратени са грешни данни",
+      "Error sending data": "Грешка при изпращането на данни!",
+      "Please, choose author": "Моля, изберете автор",
       "Are you sure? Deleting the author will also delete all his books!" : "Сигурен ли си? Изтриването на автора ще изтрие и всички неговите книги!"
 }
